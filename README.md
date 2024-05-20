@@ -1,5 +1,5 @@
 # PDF Troubleshooting Information Extractor
-This Python Flask application extracts troubleshooting information from uploaded PDF files using Optical Character Recognition (OCR) and the OpenAI GPT model to process and analyze the text. The application is designed to be scalable and secure for enterprise use.
+This Python Flask application extracts troubleshooting information from uploaded PDF files using Optical Character Recognition (OCR) and the OpenAI GPT model to process and analyze the text. 
 
 ## Approach
 
@@ -20,9 +20,10 @@ Libraries: openai, flask, pytesseract, pdf2image, python-dotenv
 ## Installation
 Clone the repository
 ```bash
-git clone <https://github.com/yourusername/your-repository.git>
-cd your-repository
+git clone <https://github.com/sam-finestone/pdf-troubleshooting.git>
+cd pdf-troubleshooting
 ```
+
 Install dependencies
 
 ```bash
