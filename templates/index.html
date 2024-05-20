@@ -1,0 +1,204 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload PDF</title> -->
+  <!-- Bootstrap CSS -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #f5f5f5;
+    }
+
+    .form-upload {
+      max-width: 330px;
+      padding: 15px;  
+      margin: auto;
+    }
+
+    .form-upload .form-floating:focus-within {
+      z-index: 2;
+    }
+
+    .btn-upload {
+      width: 100%;
+      padding: 10px;
+      font-size: 1.1em;
+    }
+
+    .error {
+      color: #a94442;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-upload">
+      <h2>Please upload a PDF</h2>
+      <form method="post" action="/" enctype="multipart/form-data">
+        <input type="file" name="file" class="form-control" required>
+        <button type="submit" class="btn btn-primary btn-upload">Upload</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const eventSource = new EventSource('/troubleshoot-stream');
+    eventSource.onmessage = function (event) {
+      console.log(event.data);
+      // Update your UI with the new data here
+      // Example: document.getElementById("result").innerText = event.data;
+    };
+    eventSource.onerror = function (error) {
+      console.error("EventSource failed:", error);
+      eventSource.close();
+    };
+  </script>
+</body>
+
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Troubleshooting Tool</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2>Upload Your PDF for Troubleshooting Analysis</h2>
+    <form id="upload-form">
+      <div class="mb-3">
+        <label for="file" class="form-label">Select PDF file</label>
+        <input type="file" class="form-control" id="file" name="file" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload and Analyze</button>
+    </form>
+    <div id="result" class="mt-3"></div>
+  </div>
+
+  <script>
+    $('#upload-form').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $.ajax({
+          url: '/upload-pdf',  // This should match your Flask route
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            $('#result').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+          },
+          error: function (response) {
+            $('#result').html('<div class="alert alert-danger">' + response.responseText + '</div>');
+          }
+        });
+      });
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html> -->
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Troubleshooting Tool</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .loader {
+      border: 6px solid #f3f3f3;
+      /* Light grey */
+      border-top: 6px solid #3498db;
+      /* Blue */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes spin {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h2>Upload Your PDF for Troubleshooting Analysis</h2>
+    <form id="upload-form">
+      <div class="mb-3">
+        <label for="file" class="form-label">Select PDF file</label>
+        <input type="file" class="form-control" id="file" name="file" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload and Analyze</button>
+    </form>
+    <div id="loader" class="loader"></div>
+    <div id="result" class="mt-3"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('#upload-form').on('submit', function (e) {
+        e.preventDefault();
+        var formData = new FormData(this);
+        $('#loader').show();
+        $('#result').empty();
+        $.ajax({
+          url: '/upload-pdf',  // This should match your Flask route
+          type: 'POST',
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            $('#loader').hide();
+            let formattedText = "Analysis Result:<br>";
+            for (let key in data) {
+              if (data.hasOwnProperty(key)) {
+                formattedText += `<strong>${key}:</strong> ${data[key]}<br>`;
+              }
+            }
+            $('#result').html(formattedText);
+          },
+          error: function (response) {
+            $('#loader').hide();
+            $('#result').html('<div class="alert alert-danger">' + response.responseText + '</div>');
+          }
+        });
+      });
+    });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
