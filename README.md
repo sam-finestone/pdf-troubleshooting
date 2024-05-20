@@ -12,9 +12,10 @@ This Python Flask application extracts troubleshooting information from uploaded
 
 ## Prerequisites
 
-Python 3.8+
-Flask
-OpenAI API Key
+- Python 3.8+
+- Flask
+- OpenAI API Key
+
 Libraries: openai, flask, pytesseract, pdf2image, python-dotenv
 
 ## Installation
