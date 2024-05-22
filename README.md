@@ -86,14 +86,6 @@ services:
 This configuration sets up Nginx to serve the application on port 80 and Gunicorn to run the Flask application internally.
 
 ## Testing
-To ensure reliability and maintainability, tests are written using pytest. To run the tests:
-
-```bash
-pytest tests/
-```
-Ensure you have test configurations set in your Flask application or set up a separate test instance with mock data for testing purposes.
-
-### How to Run Tests
 The application includes unit tests for API routes, OCR functionality, and integration with the OpenAI API:
 
 Unit Tests: Test individual functions and components.
