@@ -40,21 +40,57 @@ OPENAI_API_KEY='your_openai_api_key_here'
 ```
 
 ## Running the Application
+
+**Development:**
 To start the application locally:
 
 ```bash
 python run.py
 ```
 
-The application will be available at <http://localhost:5000>.
+The application will be available at <http://localhost:5001>.
+
+**Production:**
+
+Using Docker and Gunicorn with Nginx:
+
+```bash
+docker-compose up --build
+```
+
+This command builds and runs the Docker containers specified in the docker-compose.yml file, setting up Nginx as a reverse proxy to handle incoming traffic and serve the static files, and Gunicorn to run the Flask application.
+
+***Docker Compose for Production:***
+
+```yaml
+version: '3.9'
+
+services:
+  app:
+    build: .
+    ports:
+      - "5001:5001"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - app
+```
+
+This configuration sets up Nginx to serve the application on port 80 and Gunicorn to run the Flask application internally.
 
 ## Testing
 To ensure reliability and maintainability, tests are written using pytest. To run the tests:
 
 ```bash
-pytest
+pytest tests/
 ```
-
 Ensure you have test configurations set in your Flask application or set up a separate test instance with mock data for testing purposes.
 
 ### How to Run Tests
@@ -66,9 +102,5 @@ Integration Tests: Test the integration between the components and external APIs
 ```bash
 pytest tests/
 ```
-
-## Deployment
-For deployment, ensure that you configure production-grade environment settings. Do not run the application in debug mode in production.
-
 ## Acknowledgments
 Powered by OpenAI's GPT models.
