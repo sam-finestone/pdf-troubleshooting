@@ -40,29 +40,3 @@ def extract_troubleshooting_info(full_text: str, client: openai.OpenAI) -> dict:
         return {"troubleshooting_info": troubleshooting_info}
     except Exception as e:
         return {"error": str(e)}
-
-
-# def extract_troubleshooting_info(full_text: str, client: openai.OpenAI) -> Dict:
-#     """
-#     Analyze the extracted text and summarize troubleshooting information.
-
-#     Args:
-#     full_text (str): The full text from the OCR process.
-#     client (openai.OpenAI): The OpenAI client configured with an API key.
-
-#     Returns:
-#     Dict: A dictionary containing structured troubleshooting information.
-#     """
-#     prompt = (
-#         "Analyze the following document and summarize the troubleshooting information "
-#         "by sections. For each section, provide the title or main topic and detail the "
-#         "specific troubleshooting steps or tips found within that section:\n\n"
-#         + full_text
-#     )
-#     response = client.chat.completions.create(
-#         model="gpt-3.5-turbo",
-#         messages=[{"role": "user", "content": prompt}],
-#         max_tokens=1024,
-#     )
-#     troubleshooting_info = response.choices[0].message.content.strip()
-#     return {"troubleshooting_info": troubleshooting_info}
